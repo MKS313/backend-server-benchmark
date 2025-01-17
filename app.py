@@ -11,7 +11,7 @@ app = Robyn(__file__)
 
 #
 single_orders = []
-for k in range(cfg.num_req):
+for k in range(cfg.num_order):
     single_orders.append(
         models.Order(
             symbol=str(k),
@@ -37,6 +37,28 @@ resp_json = resp_.model_dump_json()
 async def root():
     # return "Hello, World!"
     return resp_json
+
+# @app.get("/")
+# async def root():
+#     single_orders = []
+#     for k in range(cfg.num_order):
+#         single_orders.append(
+#             models.Order(
+#                 symbol=str(k),
+#                 instrument_id=str(k),
+#                 side='buy',
+#                 volume=50,
+#                 start_time=datetime.now().isoformat(timespec='milliseconds'),
+#                 end_time=datetime.now().isoformat(timespec='milliseconds'),
+#             )
+#         )
+#
+#     return models.Responses(
+#         id='10',
+#         status=200,
+#         message='ok',
+#         data=models.Orders(single=single_orders)
+#     ).model_dump_json()
 
 
 # @app.get("/")

@@ -14,34 +14,56 @@ logging_config = LoggingConfig(
 )
 logging_middleware_config = LoggingMiddlewareConfig()
 
-single_orders = []
-for k in range(cfg.num_req):
-    single_orders.append(
-        models.Order(
-            symbol=str(k),
-            instrument_id=str(k),
-            side='buy',
-            volume=50,
-            start_time=datetime.now().isoformat(timespec='milliseconds'),
-            end_time=datetime.now().isoformat(timespec='milliseconds'),
-        )
-    )
+# single_orders = []
+# for k in range(cfg.num_req):
+#     single_orders.append(
+#         models.Order(
+#             symbol=str(k),
+#             instrument_id=str(k),
+#             side='buy',
+#             volume=50,
+#             start_time=datetime.now().isoformat(timespec='milliseconds'),
+#             end_time=datetime.now().isoformat(timespec='milliseconds'),
+#         )
+#     )
+#
+# resp_ = models.Responses(
+#     id='10',
+#     status=200,
+#     message='ok',
+#     data=models.Orders(single=single_orders)
+# )
+#
+# resp_json = resp_  #.model_dump_json()
 
-resp_ = models.Responses(
-    id='10',
-    status=200,
-    message='ok',
-    data=models.Orders(single=single_orders)
-)
 
-resp_json = resp_  #.model_dump_json()
-
+# @get("/")
+# async def root() -> models.Responses:
+#     """Keeping the tradition alive with hello world."""
+#
+#     return resp_json
 
 @get("/")
 async def root() -> models.Responses:
-    """Keeping the tradition alive with hello world."""
+    single_orders = []
+    for k in range(cfg.num_order):
+        single_orders.append(
+            models.Order(
+                symbol=str(k),
+                instrument_id=str(k),
+                side='buy',
+                volume=50,
+                start_time=datetime.now().isoformat(timespec='milliseconds'),
+                end_time=datetime.now().isoformat(timespec='milliseconds'),
+            )
+        )
 
-    return resp_json
+    return models.Responses(
+        id='10',
+        status=200,
+        message='ok',
+        data=models.Orders(single=single_orders)
+    )
 
 
 # @get("/")
