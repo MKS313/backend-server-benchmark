@@ -44,4 +44,14 @@ async def root():
 if __name__ == "__main__":
     # ab -n 20000 -c 10 http://1270.0.1:8880/
     # create a configured "Session" class
-    app.start(host="0.0.0.0", port=8880)
+
+    host = 'http://127.0.0.1'
+    port = 8001
+    r = f'{host}:{port}'
+    docs = r + '/docs'
+    print(r)
+    print(docs)
+
+    app.start(host="0.0.0.0", port=port)
+
+

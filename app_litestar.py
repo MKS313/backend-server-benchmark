@@ -50,5 +50,12 @@ app = Litestar(
 )
 
 if __name__ == "__main__":
-    uvicorn.run(app="app_litestar:app", host="0.0.0.0", port=8000, workers=8, log_config=None)
+    host = 'http://127.0.0.1'
+    port = 8002
+    r = f'{host}:{port}'
+    docs = r + '/docs'
+    print(r)
+    print(docs)
+
+    uvicorn.run(app="app_litestar:app", host="0.0.0.0", port=port, workers=8, log_config=None)
 

@@ -54,8 +54,8 @@ if __name__ == '__main__':
     # execute this command in terminal
     # fastapi dev main.py
 
-    host = 'http://10.20.32.66'
-    port = 8001
+    host = 'http://127.0.0.1'
+    port = 8000
     r = f'{host}:{port}'
     docs = r + '/docs'
     print(r)
@@ -63,3 +63,7 @@ if __name__ == '__main__':
 
     # uvicorn.run(app="main:app", host="0.0.0.0", port=9000, reload=True, workers=4)
     uvicorn.run(app="app_fastapi:app", host="0.0.0.0", port=port, workers=8, log_config=None)
+
+
+
+
