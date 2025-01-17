@@ -4,13 +4,14 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 import models
 # import models_dc as models
+import config as cfg
 
 
 app = FastAPI()
 
 
 single_orders = []
-for k in range(10000):
+for k in range(cfg.num_req):
     single_orders.append(
         models.Order(
             symbol=str(k),
@@ -38,16 +39,9 @@ async def root():
     # return JSONResponse(resp_json)
 
 
-# @app.get("/", response_model=models.Responses)
-# async def root():
-#     return resp_json
-#     # return JSONResponse(resp_json)
-
-
-# @app.get("/", response_model=str)
+# @app.get("/")
 # async def root():
 #     return "Hello, World!"
-#     # return JSONResponse(resp_json)
 
 
 if __name__ == '__main__':
@@ -62,7 +56,7 @@ if __name__ == '__main__':
     print(docs)
 
     # uvicorn.run(app="main:app", host="0.0.0.0", port=9000, reload=True, workers=4)
-    uvicorn.run(app="app_fastapi:app", host="0.0.0.0", port=port, workers=8, log_config=None)
+    uvicorn.run(app="app_fastapi:app", host="0.0.0.0", port=port, workers=cfg.num_workers, log_config=None)
 
 
 

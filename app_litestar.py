@@ -3,8 +3,9 @@ import uvicorn
 from litestar import Litestar, Request, get
 from litestar.logging import LoggingConfig
 from litestar.middleware.logging import LoggingMiddlewareConfig
-# import models
-import models_dc as models
+import models
+# import models_dc as models
+import config as cfg
 
 
 # Define a logging configuration that suppresses lower-level logs
@@ -13,9 +14,8 @@ logging_config = LoggingConfig(
 )
 logging_middleware_config = LoggingMiddlewareConfig()
 
-
 single_orders = []
-for k in range(10000):
+for k in range(cfg.num_req):
     single_orders.append(
         models.Order(
             symbol=str(k),
@@ -34,7 +34,7 @@ resp_ = models.Responses(
     data=models.Orders(single=single_orders)
 )
 
-resp_json = resp_#.model_dump_json()
+resp_json = resp_  #.model_dump_json()
 
 
 @get("/")
@@ -43,6 +43,12 @@ async def root() -> models.Responses:
 
     return resp_json
 
+
+# @get("/")
+# async def root() -> str:
+#     return "Hello, World!"
+
+
 app = Litestar(
     logging_config=logging_config,
     route_handlers=[root],
@@ -50,6 +56,7 @@ app = Litestar(
 )
 
 if __name__ == "__main__":
+
     host = 'http://127.0.0.1'
     port = 8903
     r = f'{host}:{port}'
@@ -57,5 +64,4 @@ if __name__ == "__main__":
     print(r)
     print(docs)
 
-    uvicorn.run(app="app_litestar:app", host="0.0.0.0", port=port, workers=8, log_config=None)
-
+    uvicorn.run(app="app_litestar:app", host="0.0.0.0", port=port, workers=cfg.num_workers, log_config=None)

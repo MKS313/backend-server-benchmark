@@ -3,13 +3,15 @@ from datetime import datetime
 from robyn import Robyn
 import models
 # import models_dc as models
+import config as cfg
+
 
 app = Robyn(__file__)
 
 
 #
 single_orders = []
-for k in range(10000):
+for k in range(cfg.num_req):
     single_orders.append(
         models.Order(
             symbol=str(k),
@@ -36,16 +38,16 @@ async def root():
     # return "Hello, World!"
     return resp_json
 
+
 # @app.get("/")
 # async def root():
-#     # return "Hello, World!"
-#     return resp_json
+#     return "Hello, World!"
 
 if __name__ == "__main__":
     # ab -n 20000 -c 10 http://1270.0.1:8880/
     # create a configured "Session" class
 
-    # python app.py --processes 1 --workers 8
+    # python app.py --processes 1 --workers 20
 
     host = 'http://127.0.0.1'
     port = 8902
