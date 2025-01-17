@@ -51,7 +51,7 @@ app = Litestar(
 
 if __name__ == "__main__":
     host = 'http://127.0.0.1'
-    port = 8002
+    port = 8903
     r = f'{host}:{port}'
     docs = r + '/docs'
     print(r)

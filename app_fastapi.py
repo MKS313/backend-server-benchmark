@@ -55,7 +55,7 @@ if __name__ == '__main__':
     # fastapi dev main.py
 
     host = 'http://127.0.0.1'
-    port = 8000
+    port = 8901
     r = f'{host}:{port}'
     docs = r + '/docs'
     print(r)

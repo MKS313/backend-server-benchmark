@@ -45,8 +45,10 @@ if __name__ == "__main__":
     # ab -n 20000 -c 10 http://1270.0.1:8880/
     # create a configured "Session" class
 
+    # python app.py --processes 1 --workers 8
+
     host = 'http://127.0.0.1'
-    port = 8001
+    port = 8902
     r = f'{host}:{port}'
     docs = r + '/docs'
     print(r)
