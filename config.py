@@ -6,6 +6,6 @@ num_workers = 20
 # num_cpu = multiprocessing.cpu_count()
 print(num_workers)
 
-num_order = 1000
+num_order = 10
 
 

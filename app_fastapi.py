@@ -69,6 +69,7 @@ async def root():
 if __name__ == '__main__':
     # execute this command in terminal
     # fastapi dev main.py
+    # ab -n 20000 -c 10 http://127.0.0.1:8901/
 
     host = 'http://127.0.0.1'
     port = 8901
