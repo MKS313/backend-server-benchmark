@@ -6,6 +6,7 @@ from litestar.middleware.logging import LoggingMiddlewareConfig
 import models
 # import models_dc as models
 import config as cfg
+import time
 
 
 # Define a logging configuration that suppresses lower-level logs
@@ -67,6 +68,7 @@ logging_middleware_config = LoggingMiddlewareConfig()
 
 @get("/")
 async def root() -> Response:
+    tic = time.time()
     single_orders = []
     for k in range(cfg.num_order):
         single_orders.append(
@@ -79,6 +81,10 @@ async def root() -> Response:
                 end_time=datetime.now().isoformat(timespec='milliseconds'),
             )
         )
+
+    # toc = time.time()
+    elapsed_time = time.time() - tic
+    print(f"Elapsed time: {elapsed_time} seconds")
 
     return Response(
         status_code=200,
