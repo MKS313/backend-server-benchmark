@@ -7,9 +7,9 @@ import config as cfg
 
 
 rcfg = Config()
-rcfg.processes = 10
-rcfg.workers = 20
-rcfg.fast = True
+rcfg.processes = 8  # 10
+rcfg.workers = 8  # 20
+# rcfg.fast = True
 
 app = Robyn(__file__, config=rcfg)
 

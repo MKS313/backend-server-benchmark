@@ -1,6 +1,6 @@
 from datetime import datetime
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 import models
 # import models_dc as models
@@ -32,8 +32,7 @@ app = FastAPI()
 #
 # resp_json = resp_#.__dict__
 
-
-@app.get("/", response_model=models.Responses)
+@app.get("/")
 async def root():
     single_orders = []
     for k in range(cfg.num_order):
@@ -48,12 +47,33 @@ async def root():
             )
         )
 
-    return models.Responses(
-        id='10',
-        status=200,
-        message='ok',
-        data=models.Orders(single=single_orders)
+    return Response(
+        status_code=200,
+        headers={"Content-Type": "application/json"},
+        content=models.Orders(single=single_orders).model_dump_json(),
     )
+
+# @app.get("/", response_model=models.Responses)
+# async def root():
+#     single_orders = []
+#     for k in range(cfg.num_order):
+#         single_orders.append(
+#             models.Order(
+#                 symbol=str(k),
+#                 instrument_id=str(k),
+#                 side='buy',
+#                 volume=50,
+#                 start_time=datetime.now().isoformat(timespec='milliseconds'),
+#                 end_time=datetime.now().isoformat(timespec='milliseconds'),
+#             )
+#         )
+#
+#     return models.Responses(
+#         id='10',
+#         status=200,
+#         message='ok',
+#         data=models.Orders(single=single_orders)
+#     )
 
 # @app.get("/", response_model=models.Responses)
 # async def root():

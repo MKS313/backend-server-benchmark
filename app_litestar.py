@@ -1,6 +1,6 @@
 from datetime import datetime
 import uvicorn
-from litestar import Litestar, Request, get
+from litestar import Litestar, Request, Response, get
 from litestar.logging import LoggingConfig
 from litestar.middleware.logging import LoggingMiddlewareConfig
 import models
@@ -43,8 +43,30 @@ logging_middleware_config = LoggingMiddlewareConfig()
 #
 #     return resp_json
 
+# @get("/")
+# async def root() -> models.Responses:
+#     single_orders = []
+#     for k in range(cfg.num_order):
+#         single_orders.append(
+#             models.Order(
+#                 symbol=str(k),
+#                 instrument_id=str(k),
+#                 side='buy',
+#                 volume=50,
+#                 start_time=datetime.now().isoformat(timespec='milliseconds'),
+#                 end_time=datetime.now().isoformat(timespec='milliseconds'),
+#             )
+#         )
+#
+#     return models.Responses(
+#         id='10',
+#         status=200,
+#         message='ok',
+#         data=models.Orders(single=single_orders)
+#     )
+
 @get("/")
-async def root() -> models.Responses:
+async def root() -> Response:
     single_orders = []
     for k in range(cfg.num_order):
         single_orders.append(
@@ -58,13 +80,11 @@ async def root() -> models.Responses:
             )
         )
 
-    return models.Responses(
-        id='10',
-        status=200,
-        message='ok',
-        data=models.Orders(single=single_orders)
+    return Response(
+        status_code=200,
+        headers={"Content-Type": "application/json"},
+        content=models.Orders(single=single_orders).model_dump_json(),
     )
-
 
 # @get("/")
 # async def root() -> str:
