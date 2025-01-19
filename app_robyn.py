@@ -31,7 +31,8 @@ router = SubRouter(__file__)
 
 @router.get("/")
 async def root(request: Request) -> Response:
-    tic = time.time()
+    # tic = time.time()
+
     # page_size = 10
     # orders = [
     #     Order(
@@ -58,11 +59,11 @@ async def root(request: Request) -> Response:
             )
         )
 
-    # toc = time.time()
-    elapsed_time = time.time() - tic
-    print(f"Elapsed time: {elapsed_time} seconds")
-
-    tic = time.time()
+    # # toc = time.time()
+    # elapsed_time = time.time() - tic
+    # print(f"Elapsed time: {elapsed_time} seconds")
+    #
+    # tic = time.time()
 
     resp = Response(
         status_code=200,
@@ -70,20 +71,21 @@ async def root(request: Request) -> Response:
         description=models.Orders(single=single_orders).model_dump_json(),
     )
 
-    # toc = time.time()
-    elapsed_time = time.time() - tic
-    print(f"Elapsed time: {elapsed_time} seconds")
+    # # toc = time.time()
+    # elapsed_time = time.time() - tic
+    # print(f"Elapsed time: {elapsed_time} seconds")
 
     return resp
 
 
 #
 rcfg = Config()
-rcfg.processes = 8  # 10
-rcfg.workers = 8  # 20
-# rcfg.fast = True
+rcfg.processes = cfg.num_processes  # 10
+rcfg.workers = cfg.num_workers  # 20
+rcfg.fast = False
 
-app = Robyn(__file__, config=rcfg)
+# app = Robyn(__file__, config=rcfg)
+app = Robyn(__file__)
 app.include_router(router)
 
 

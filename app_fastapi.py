@@ -34,8 +34,8 @@ app = FastAPI()
 # resp_json = resp_#.__dict__
 
 @app.get("/")
-async def root():
-    tic = time.time()
+async def root(request: Request) -> Response:
+    # tic = time.time()
     single_orders = []
     for k in range(cfg.num_order):
         single_orders.append(
@@ -49,9 +49,11 @@ async def root():
             )
         )
 
-    # toc = time.time()
-    elapsed_time = time.time() - tic
-    print(f"Elapsed time: {elapsed_time} seconds")
+    # # toc = time.time()
+    # elapsed_time = time.time() - tic
+    # print(f"Elapsed time: {elapsed_time} seconds")
+    #
+    # tic = time.time()
 
     resp = Response(
         status_code=200,
@@ -59,9 +61,9 @@ async def root():
         content=models.Orders(single=single_orders).model_dump_json(),
     )
 
-    # toc = time.time()
-    elapsed_time = time.time() - tic
-    print(f"Elapsed time: {elapsed_time} seconds")
+    # # toc = time.time()
+    # elapsed_time = time.time() - tic
+    # print(f"Elapsed time: {elapsed_time} seconds")
 
     return resp
 
