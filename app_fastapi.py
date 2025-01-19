@@ -53,11 +53,17 @@ async def root():
     elapsed_time = time.time() - tic
     print(f"Elapsed time: {elapsed_time} seconds")
 
-    return Response(
+    resp = Response(
         status_code=200,
         headers={"Content-Type": "application/json"},
         content=models.Orders(single=single_orders).model_dump_json(),
     )
+
+    # toc = time.time()
+    elapsed_time = time.time() - tic
+    print(f"Elapsed time: {elapsed_time} seconds")
+
+    return resp
 
 # @app.get("/", response_model=models.Responses)
 # async def root():

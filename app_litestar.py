@@ -86,11 +86,19 @@ async def root() -> Response:
     elapsed_time = time.time() - tic
     print(f"Elapsed time: {elapsed_time} seconds")
 
-    return Response(
+    tic = time.time()
+
+    resp = Response(
         status_code=200,
         headers={"Content-Type": "application/json"},
         content=models.Orders(single=single_orders).model_dump_json(),
     )
+
+    # toc = time.time()
+    elapsed_time = time.time() - tic
+    print(f"Elapsed time: {elapsed_time} seconds")
+
+    return resp
 
 # @get("/")
 # async def root() -> str:
