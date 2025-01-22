@@ -30,6 +30,9 @@ router = SubRouter(__file__)
 
 
 @router.get("/")
+# async def root():
+#     return "Hello, World!"
+
 async def root(request: Request) -> Response:
     # tic = time.time()
 
@@ -82,10 +85,10 @@ async def root(request: Request) -> Response:
 rcfg = Config()
 rcfg.processes = cfg.num_processes  # 10
 rcfg.workers = cfg.num_workers  # 20
-rcfg.fast = False
+# rcfg.fast = False
 
-# app = Robyn(__file__, config=rcfg)
-app = Robyn(__file__)
+app = Robyn(__file__, config=rcfg)
+# app = Robyn(__file__)
 app.include_router(router)
 
 
@@ -93,7 +96,7 @@ if __name__ == "__main__":
     # ab -n 20000 -c 10 http://127.0.0.1:8902/
     # create a configured "Session" class
 
-    # python app.py --processes 1 --workers 20
+    # python app.py --processes 8 --workers 8 --log-level WARN
 
     host = 'http://127.0.0.1'
     port = 8902
