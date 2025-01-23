@@ -97,7 +97,7 @@ if __name__ == "__main__":
     # create a configured "Session" class
 
     # oha --no-tui --insecure -c 100 -n 50000 http://127.0.0.1:8902
-    # python app.py --processes 8 --workers 8 --log-level WARN
+    # python app_robyn.py --processes 20 --workers 20 --log-level WARN
     # python app_robyn.py --workers=20 --processes=8 --log-level WARN
 
     host = 'http://127.0.0.1'
