@@ -1,8 +1,8 @@
 import multiprocessing
 
 
-num_processes = 8  # 10
-num_workers = 8  # 20
+num_processes = 20  # 10
+num_workers = 20  # 20
 
 # num_workers = multiprocessing.Pool()._processes
 # num_cpu = multiprocessing.cpu_count()
