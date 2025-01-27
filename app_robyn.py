@@ -85,7 +85,7 @@ async def root(request: Request) -> Response:
 rcfg = Config()
 rcfg.processes = cfg.num_processes  # 10
 rcfg.workers = cfg.num_workers  # 20
-# rcfg.fast = False
+# rcfg.fast = True
 
 app = Robyn(__file__, config=rcfg)
 # app = Robyn(__file__)
