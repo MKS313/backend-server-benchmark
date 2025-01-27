@@ -113,7 +113,7 @@ if __name__ == '__main__':
     print(docs)
 
     # uvicorn.run(app="main:app", host="0.0.0.0", port=9000, reload=True, workers=4)
-    uvicorn.run(app="app_fastapi:app", host="0.0.0.0", port=port, workers=cfg.num_workers, log_config=None)
+    uvicorn.run(app="app_fastapi:app", host="0.0.0.0", port=port, workers=cfg.num_workers, log_level="warning")
 
 
 
