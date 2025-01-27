@@ -121,4 +121,4 @@ if __name__ == "__main__":
     print(r)
     print(docs)
 
-    uvicorn.run(app="app_litestar:app", host="0.0.0.0", port=port, workers=cfg.num_workers, log_config=None)
+    uvicorn.run(app="app_litestar:app", host="0.0.0.0", port=port, workers=cfg.num_workers, log_level="warning")
