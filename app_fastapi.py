@@ -1,64 +1,21 @@
-from datetime import datetime
 import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
-import models
-# import models_dc as models
 import config as cfg
-import time
+from create_order import create_order
 
 
 app = FastAPI()
 
 
-# single_orders = []
-# for k in range(cfg.num_req):
-#     single_orders.append(
-#         models.Order(
-#             symbol=str(k),
-#             instrument_id=str(k),
-#             side='buy',
-#             volume=50,
-#             start_time=datetime.now().isoformat(timespec='milliseconds'),
-#             end_time=datetime.now().isoformat(timespec='milliseconds'),
-#         )
-#     )
-#
-# resp_ = models.Responses(
-#     id='10',
-#     status=200,
-#     message='ok',
-#     data=models.Orders(single=single_orders)
-# )
-#
-# resp_json = resp_#.__dict__
-
 @app.get("/")
 async def root(request: Request) -> Response:
-    # tic = time.time()
-    single_orders = []
-    for k in range(cfg.num_order):
-        single_orders.append(
-            models.Order(
-                symbol=str(k),
-                instrument_id=str(k),
-                side='buy',
-                volume=50,
-                start_time=datetime.now().isoformat(timespec='milliseconds'),
-                end_time=datetime.now().isoformat(timespec='milliseconds'),
-            )
-        )
-
-    # # toc = time.time()
-    # elapsed_time = time.time() - tic
-    # print(f"Elapsed time: {elapsed_time} seconds")
-    #
-    # tic = time.time()
+    # # tic = time.time()
 
     resp = Response(
         status_code=200,
         headers={"Content-Type": "application/json"},
-        content=models.Orders(single=single_orders).model_dump_json(),
+        content=await create_order(),
     )
 
     # # toc = time.time()
@@ -67,27 +24,6 @@ async def root(request: Request) -> Response:
 
     return resp
 
-# @app.get("/", response_model=models.Responses)
-# async def root():
-#     single_orders = []
-#     for k in range(cfg.num_order):
-#         single_orders.append(
-#             models.Order(
-#                 symbol=str(k),
-#                 instrument_id=str(k),
-#                 side='buy',
-#                 volume=50,
-#                 start_time=datetime.now().isoformat(timespec='milliseconds'),
-#                 end_time=datetime.now().isoformat(timespec='milliseconds'),
-#             )
-#         )
-#
-#     return models.Responses(
-#         id='10',
-#         status=200,
-#         message='ok',
-#         data=models.Orders(single=single_orders)
-#     )
 
 # @app.get("/", response_model=models.Responses)
 # async def root():
