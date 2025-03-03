@@ -4,7 +4,6 @@ import config as cfg
 from create_order import create_order
 
 
-
 async def root(res, req):
     orders_response = await create_order()
 
@@ -14,7 +13,6 @@ async def root(res, req):
     res.end(orders_response)  # Send JSON response
 
 
-
 def run(app: App):
     app.get("/", root)
 
@@ -22,6 +20,7 @@ def run(app: App):
     #     "/",
     #     lambda res, req: res.end("Hello, World!")
     # )
+
 
 if __name__ == "__main__":
     # oha --no-tui --insecure -c 100 -n 50000 http://127.0.0.1:8905
