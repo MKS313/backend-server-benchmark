@@ -1,4 +1,4 @@
-from robyn import Request, Response, SubRouter, Config, Robyn
+from robyn import Request, Response, SubRouter, Config, Robyn, jsonify, WebSocket
 import config as cfg
 from create_order import create_order
 
@@ -39,6 +39,23 @@ app = Robyn(__file__, config=rcfg)
 # app = Robyn(__file__)
 app.include_router(router)
 
+websocket = WebSocket(app, "/ws")
+
+
+@websocket.on("connect")
+def connect():
+    return "Connected to ws"
+
+
+@websocket.on("close")
+def close():
+    return "Goodbye world, from ws"
+
+
+@websocket.on("message")
+def message():
+    return "Hello world, from ws"
+
 
 if __name__ == "__main__":
     # ab -n 20000 -c 10 http://127.0.0.1:8902/
@@ -47,7 +64,7 @@ if __name__ == "__main__":
     # oha --no-tui --insecure -c 100 -n 50000 http://127.0.0.1:8902
     # oha --insecure -c 100 -n 50000 http://127.0.0.1:8902
     # python app_robyn.py --processes 20 --workers 20 --log-level WARN
-    # python app_robyn.py --workers=20 --processes=8 --log-level WARN
+    # python app_robyn.py --processes 8 --workers 8 --log-level WARN
 
     host = 'http://127.0.0.1'
     port = 8902
@@ -57,4 +74,3 @@ if __name__ == "__main__":
     print(docs)
 
     app.start(host="0.0.0.0", port=port)
-

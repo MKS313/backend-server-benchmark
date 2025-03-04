@@ -1,6 +1,7 @@
 from datetime import datetime
 import uvicorn
-from litestar import Litestar, Request, Response, get
+from litestar import Litestar, Request, Response, get, websocket_listener, WebSocket
+from litestar.handlers import WebsocketListener
 from litestar.logging import LoggingConfig
 from litestar.middleware.logging import LoggingMiddlewareConfig
 # import models
@@ -31,14 +32,31 @@ async def root(request: Request) -> Response:
 
     return resp
 
+
 # @get("/")
 # async def root() -> str:
 #     return "Hello, World!"
 
+# @websocket_listener("/ws")
+# async def handler(data: str) -> str:
+#     return data
+
+class WebSocketHandler(WebsocketListener):
+    path = "/ws"
+
+    async def on_accept(self, socket: WebSocket) -> str:
+        return "Connected to ws"
+
+    async def on_disconnect(self, socket: WebSocket) -> str:
+        return "Goodbye world, from ws"
+
+    async def on_receive(self, data: str) -> str:
+        return "Hello world, from ws"
+
 
 app = Litestar(
     logging_config=logging_config,
-    route_handlers=[root],
+    route_handlers=[root, WebSocketHandler],
     debug=False,
 )
 

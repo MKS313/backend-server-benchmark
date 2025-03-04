@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, WebSocket
 from fastapi.responses import JSONResponse
 import config as cfg
 from create_order import create_order
@@ -34,6 +34,13 @@ async def root(request: Request) -> Response:
 # @app.get("/")
 # async def root():
 #     return "Hello, World!"
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        await websocket.send_text("Hello world, from ws")
 
 
 if __name__ == '__main__':
