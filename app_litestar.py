@@ -7,7 +7,10 @@ from litestar.middleware.logging import LoggingMiddlewareConfig
 # import models
 import models_dc as models
 import config as cfg
-from create_order import create_order, create_order_dc
+from create_order import create_order, create_order_dc, create_order_sync
+
+
+doc = create_order_sync()
 
 # Define a logging configuration that suppresses lower-level logs
 logging_config = LoggingConfig(
@@ -16,26 +19,30 @@ logging_config = LoggingConfig(
 logging_middleware_config = LoggingMiddlewareConfig()
 
 
-@get("/")
-async def root(request: Request) -> Response:
-    # tic = time.time()
-
-    resp = Response(
-        status_code=200,
-        headers={"Content-Type": "application/json"},
-        content=await create_order_dc(),
-    )
-
-    # # toc = time.time()
-    # elapsed_time = time.time() - tic
-    # print(f"Elapsed time: {elapsed_time} seconds")
-
-    return resp
+# @get("/")
+# async def root(request: Request) -> Response:
+#     # tic = time.time()
+#
+#     resp = Response(
+#         status_code=200,
+#         headers={"Content-Type": "application/json"},
+#         content=await create_order_dc(),
+#     )
+#
+#     # # toc = time.time()
+#     # elapsed_time = time.time() - tic
+#     # print(f"Elapsed time: {elapsed_time} seconds")
+#
+#     return resp
 
 
 # @get("/")
 # async def root() -> str:
 #     return "Hello, World!"
+
+@get("/")
+async def root() -> str:
+    return doc
 
 # @websocket_listener("/ws")
 # async def handler(data: str) -> str:

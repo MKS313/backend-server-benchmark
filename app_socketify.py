@@ -1,7 +1,10 @@
 import asyncio
 from socketify import App
 import config as cfg
-from create_order import create_order
+from create_order import create_order, create_order_sync
+
+
+doc = create_order_sync()
 
 
 async def root(res, req):
@@ -14,12 +17,17 @@ async def root(res, req):
 
 
 def run(app: App):
-    app.get("/", root)
+    # app.get("/", root)
 
     # app.get(
     #     "/",
     #     lambda res, req: res.end("Hello, World!")
     # )
+
+    app.get(
+        "/",
+        lambda res, req: res.end(doc)
+    )
 
 
 if __name__ == "__main__":

@@ -2,27 +2,29 @@ import uvicorn
 from fastapi import FastAPI, Request, Response, WebSocket
 from fastapi.responses import JSONResponse
 import config as cfg
-from create_order import create_order
+from create_order import create_order, create_order_sync
 
+
+doc = create_order_sync()
 
 app = FastAPI()
 
 
-@app.get("/")
-async def root(request: Request) -> Response:
-    # # tic = time.time()
-
-    resp = Response(
-        status_code=200,
-        headers={"Content-Type": "application/json"},
-        content=await create_order(),
-    )
-
-    # # toc = time.time()
-    # elapsed_time = time.time() - tic
-    # print(f"Elapsed time: {elapsed_time} seconds")
-
-    return resp
+# @app.get("/")
+# async def root(request: Request) -> Response:
+#     # # tic = time.time()
+#
+#     resp = Response(
+#         status_code=200,
+#         headers={"Content-Type": "application/json"},
+#         content=await create_order(),
+#     )
+#
+#     # # toc = time.time()
+#     # elapsed_time = time.time() - tic
+#     # print(f"Elapsed time: {elapsed_time} seconds")
+#
+#     return resp
 
 
 # @app.get("/", response_model=models.Responses)
@@ -35,12 +37,20 @@ async def root(request: Request) -> Response:
 # async def root():
 #     return "Hello, World!"
 
+@app.get("/")
+async def root():
+    return doc.model_dump_json()
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
+        # try:
         data = await websocket.receive_text()
         await websocket.send_text("Hello world, from ws")
+
+        # except:
+        #     pass
 
 
 if __name__ == '__main__':

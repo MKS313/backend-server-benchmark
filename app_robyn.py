@@ -1,33 +1,41 @@
+import json
+
 from robyn import Request, Response, SubRouter, Config, Robyn, jsonify, WebSocket
 import config as cfg
-from create_order import create_order
+from create_order import create_order, create_order_sync
 
 # router = SubRouter(__file__, prefix="/api")
+
+doc = create_order_sync()
 
 router = SubRouter(__file__)
 
 
-@router.get("/")
-async def root(request: Request) -> Response:
-    # # tic = time.time()
-
-    resp = Response(
-        status_code=200,
-        headers={"Content-Type": "application/json"},
-        description=await create_order(),
-    )
-
-    # # toc = time.time()
-    # elapsed_time = time.time() - tic
-    # print(f"Elapsed time: {elapsed_time} seconds")
-
-    return resp
+# @router.get("/")
+# async def root(request: Request) -> Response:
+#     # # tic = time.time()
+#
+#     resp = Response(
+#         status_code=200,
+#         headers={"Content-Type": "application/json"},
+#         description=await create_order(),
+#     )
+#
+#     # # toc = time.time()
+#     # elapsed_time = time.time() - tic
+#     # print(f"Elapsed time: {elapsed_time} seconds")
+#
+#     return resp
 
 
 # @router.get("/")
 # async def root():
 #     return "Hello, World!"
 
+
+@router.get("/")
+async def root():
+    return json.loads(doc.model_dump_json())
 
 #
 rcfg = Config()
